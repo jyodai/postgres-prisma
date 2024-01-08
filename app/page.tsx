@@ -1,97 +1,52 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { Suspense } from 'react'
-import Table from '@/components/table'
-import TablePlaceholder from '@/components/table-placeholder'
-import ExpandingArrow from '@/components/expanding-arrow'
-
-export const dynamic = 'force-dynamic'
+"use client";
+import { useState, useEffect } from 'react';
+import EntryList from '@/app/components/EntryList';
+import AddEntryForm from '@/app/components/AddEntryForm';
+import { getEntriesFromSheet, deleteEntryFromSheet, editEntryInSheet } from '@/services/sheetService';
+import { Entry } from '@/types/types';
 
 export default function Home() {
-  return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center">
-      <Link
-        href="https://vercel.com/templates/next.js/postgres-prisma"
-        className="group mt-20 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-sm font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition-all"
-      >
-        <p>Deploy your own to Vercel</p>
-        <ExpandingArrow />
-      </Link>
-      <h1 className="pt-4 pb-8 bg-gradient-to-br from-black via-[#171717] to-[#575757] bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
-        Postgres on Vercel
-      </h1>
-      <Suspense fallback={<TablePlaceholder />}>
-        <Table />
-      </Suspense>
-      <p className="font-light text-gray-600 w-full max-w-lg text-center mt-6">
-        <Link
-          href="https://vercel.com/postgres"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Vercel Postgres
-        </Link>{' '}
-        demo with{' '}
-        <Link
-          href="https://prisma.io"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Prisma
-        </Link>{' '}
-        as the ORM. <br /> Built with{' '}
-        <Link
-          href="https://nextjs.org/docs"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Next.js App Router
-        </Link>
-        .
-      </p>
+    const [entries, setEntries] = useState<Entry[]>([]);
+    const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
-      <div className="flex justify-center space-x-5 pt-10 mt-10 border-t border-gray-300 w-full max-w-xl text-gray-600">
-        <Link
-          href="https://postgres-starter.vercel.app/"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Starter
-        </Link>
-        <Link
-          href="https://postgres-kysely.vercel.app/"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Kysely
-        </Link>
-        <Link
-          href="https://postgres-drizzle.vercel.app/"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Drizzle
-        </Link>
-      </div>
+    const fetchEntries = async () => {
+        const data = await getEntriesFromSheet();
+        setEntries(data);
+    };
 
-      <div className="sm:absolute sm:bottom-0 w-full px-20 py-10 flex justify-between">
-        <Link href="https://vercel.com">
-          <Image
-            src="/vercel.svg"
-            alt="Vercel Logo"
-            width={100}
-            height={24}
-            priority
-          />
-        </Link>
-        <Link
-          href="https://github.com/vercel/examples/tree/main/storage/postgres-prisma"
-          className="flex items-center space-x-2"
-        >
-          <Image
-            src="/github.svg"
-            alt="GitHub Logo"
-            width={24}
-            height={24}
-            priority
-          />
-          <p className="font-light">Source</p>
-        </Link>
-      </div>
-    </main>
-  )
+    useEffect(() => {
+        fetchEntries();
+    }, []);
+
+    const handleDelete = async (id: number) => {
+        await deleteEntryFromSheet(id);
+        fetchEntries();
+    };
+
+    const handleEdit = (entry: Entry) => {
+        setEditingEntry(entry);
+    };
+
+    const handleSave = async (entry: Entry) => {
+        await editEntryInSheet(entry.id, entry);
+        setEditingEntry(null);
+        fetchEntries();
+    };
+
+    return (
+        <div className="container mx-auto p-4">
+            {editingEntry ? (
+                <>
+                    <AddEntryForm initialEntry={editingEntry} onSave={handleSave} />
+                    <button onClick={() => setEditingEntry(null)} className="mt-4 w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-black bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        キャンセル
+                    </button>
+                </>
+            ) : (
+                <EntryList entries={entries} onDelete={handleDelete} onEdit={handleEdit} />
+            )}
+        </div>
+
+    );
 }
+
