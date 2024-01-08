@@ -19,6 +19,20 @@ model users {
   createdAt DateTime @default(now())
 }
 
+model dev_expenses {
+  id           Int      @id @default(autoincrement())
+  date         DateTime
+  category_id  Int
+  amount       String
+  store        String
+  memo         String
+  claim_flag   Int
+  claim_amount Int
+  category     dev_categories? @relation(fields: [category_id], references: [id])
+
+  @@unique([date, category_id])
+}
+
 model dev_categories {
   id    Int    @id @default(autoincrement())
   name  String
@@ -27,4 +41,5 @@ model dev_categories {
   memo  String
   sort  Int
   createdAt DateTime @default(now())
+  entries dev_expenses[]
 }
