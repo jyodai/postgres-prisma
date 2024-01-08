@@ -19,7 +19,7 @@ model users {
   createdAt DateTime @default(now())
 }
 
-model dev_expenses {
+model dev_entry {
   id           Int      @id @default(autoincrement())
   date         DateTime
   category_id  Int
@@ -41,5 +41,5 @@ model dev_categories {
   memo  String
   sort  Int
   createdAt DateTime @default(now())
-  entries dev_expenses[]
+  entries dev_entry[]
 }
