@@ -18,3 +18,13 @@ model users {
   image     String
   createdAt DateTime @default(now())
 }
+
+model dev_categories {
+  id    Int    @id @default(autoincrement())
+  name  String
+  type  Int
+  color String
+  memo  String
+  sort  Int
+  createdAt DateTime @default(now())
+}
