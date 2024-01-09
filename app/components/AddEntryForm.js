@@ -20,25 +20,26 @@ const AddEntryForm = ({ initialEntry, onSave }) => {
     const [categoryType, setCategoryType] = useState(initialEntry?.category.type || Constants.CATEGORY_TYPE_EXPENSE);
 
     const [entry, setEntry] = useState({
-        id: initialEntry?.id || null,
         date:  dateUtils.formatDateToDateTimeLocal(new Date()),
         category_id: initialEntry?.category_id || categories.length === 0 ? 0 : categories[0].id,
-        amount: initialEntry?.amount || '',
+        amount: initialEntry?.amount || 0,
         store: initialEntry?.store || '',
         memo: initialEntry?.memo || '',
         claim_flag: initialEntry?.claim_flag || 0,
+        claim_amount: initialEntry?.claim_amount || 0,
     });
 
     useEffect(() => {
         if (initialEntry) {
             setEntry({
                 id: initialEntry.id,
-                date: dateUtils.formatDateToDateTimeLocal(initialEntry.date),
+                date: initialEntry.date,
                 category_id: initialEntry.category_id,
                 amount: initialEntry.amount,
                 store: initialEntry.store,
                 memo: initialEntry.memo,
                 claim_flag: initialEntry.claim_flag,
+                claim_amount: initialEntry.claim_amount,
             });
         }
 
@@ -67,8 +68,11 @@ const AddEntryForm = ({ initialEntry, onSave }) => {
                 <input
                     type="datetime-local"
                     name="date"
-                    value={entry.date}
-                    onChange={(e) => setEntry({ ...entry, date: e.target.value })}
+                    value={entry.date instanceof Date ?
+                      dateUtils.formatDateToDateTimeLocal(entry.date) :
+                      dateUtils.formatDateToDateTimeLocal(new Date())
+                    }
+                    onChange={(e) => setEntry({ ...entry, date: new Date(e.target.value) })}
                     required
                     className={inputClass}
                 />
@@ -108,8 +112,7 @@ const AddEntryForm = ({ initialEntry, onSave }) => {
                 <input
                     type="number"
                     name="amount"
-                    value={entry.amount}
-                    onChange={(e) => setEntry({ ...entry, amount: e.target.value })}
+                    onChange={(e) => setEntry({ ...entry, amount: Number(e.target.value) })}
                     required
                     className={inputClass}
                 />
@@ -146,6 +149,16 @@ const AddEntryForm = ({ initialEntry, onSave }) => {
                     checked={entry.claim_flag === 1}
                     onChange={handleClaimFlagChange}
                     className="mt-1"
+                />
+            </div>
+
+            <div className="mb-4">
+                <label htmlFor="claimAmount" className="block text-sm font-medium text-gray-700">請求金額</label>
+                <input
+                    type="number"
+                    name="claimAmount"
+                    onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
+                    className={inputClass}
                 />
             </div>
 

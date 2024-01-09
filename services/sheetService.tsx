@@ -60,20 +60,16 @@ async function getAccessToken() {
 }
 
 export const addEntryToSheet = async (entry: Entry) => {
-    const accessToken = await getAccessToken();
-
     await fetch(
-        process.env.NEXT_PUBLIC_SCRIPT_URL as string,
+        '/api/entry',
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`,
             },
-            body : JSON.stringify({function: 'addData', parameters: entry})
+            body : JSON.stringify(entry)
         }
     )
-
     alert('登録完了');
 };
 
