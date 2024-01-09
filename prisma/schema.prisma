@@ -23,7 +23,7 @@ model dev_entry {
   id           Int      @id @default(autoincrement())
   date         DateTime
   category_id  Int
-  amount       String
+  amount       Int
   store        String
   memo         String
   claim_flag   Int

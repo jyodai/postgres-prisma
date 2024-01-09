@@ -6,6 +6,7 @@ export interface Entry {
     store: string;
     memo: string;
     claim_flag: number;
+    claim_amount : number;
     category?: Category;
 }
 
