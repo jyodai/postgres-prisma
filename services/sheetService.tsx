@@ -3,37 +3,21 @@
 import { Entry, Category } from '@/types/types';
 
 export const getEntriesFromSheet = async (): Promise<Entry[]> => {
-    const accessToken = await getAccessToken();
+  const res = await fetch('/api/entry');
+  const json = await res.json()
+  const entries = json.entries;
 
-    const response = await fetch(
-        process.env.NEXT_PUBLIC_SCRIPT_URL as string,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify({function: 'getData'})
-        }
-    );
+  const categories = await getCategoriesFromLocalStorage();
+  const convertEntries = entries.map((entry: Entry) => {
+      const category = categories.find(category => category.id === entry.category_id);
 
-    const data = await response.json();
-    const lists = JSON.parse(data.response.result) as Entry[];
-    const categories = await getCategoriesFromLocalStorage();
-
-    const convertLists = lists.map((list: Entry) => {
-        const category = categories.find(category => category.id === list.category_id);
-
-        return {
-            ...list,
-            id: Number(list.id),
-            date: new Date(list.date),
-            claim_flag: Number(list.claim_flag),
-            category_id: Number(list.category_id),
-            category,
-        };
-    });
-    return convertLists;
+      return {
+          ...entry,
+          date: new Date(entry.date),
+          category,
+      };
+  });
+  return convertEntries;
 };
 
 async function getAccessToken() {
