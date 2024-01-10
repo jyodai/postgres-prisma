@@ -4,19 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { dateUtils } from '@/utils/date';
 import { Constants } from '@/constants';
 
-function getCategoriesFromLocalStorage() {
-    const categoriesJSON = localStorage.getItem('categories');
-    if (categoriesJSON) {
-        return JSON.parse(categoriesJSON);
-    } else {
-        return [];
-    }
-}
-
-const AddEntryForm = ({ initialEntry, onSave }) => {
-    const categoriesFromStorage = getCategoriesFromLocalStorage();
-    const [categories, setCategories] = useState(categoriesFromStorage);
-
+const AddEntryForm = ({ initialEntry, categories, onSave }) => {
     const [categoryType, setCategoryType] = useState(initialEntry?.category.type || Constants.CATEGORY_TYPE_EXPENSE);
 
     const [entry, setEntry] = useState({
@@ -101,7 +89,7 @@ const AddEntryForm = ({ initialEntry, onSave }) => {
                     className={inputClass}
                     required
                 >
-                    {categoriesFromStorage.filter(cat => cat.type === categoryType).map((category) => (
+                    {categories.filter(cat => cat.type === categoryType).map((category) => (
                         <option key={category.id} value={category.id}>{category.name}</option>
                     ))}
                 </select>

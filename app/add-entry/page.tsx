@@ -1,10 +1,18 @@
-"use client";
-import { useState } from 'react';
+'use client'
+
+import { useState, useEffect } from 'react';
 import AddEntryForm from '@/app/components/AddEntryForm';
-import { addEntryToSheet } from '@/services/sheetService';
-import { Entry } from '@/types/types';
+import { addEntryToSheet, getCategory } from '@/services/sheetService';
+import { Entry, Category } from '@/types/types';
 
 export default function Home() {
+    const [categories, setCategories] = useState<Category[]>([]);
+
+    const fetchCategories = async () => {
+        const data = await getCategory();
+        setCategories(data);
+    };
+
     const [refreshKey, setRefreshKey] = useState(0);
 
     const handleSave = async (entry: Entry) => {
@@ -12,9 +20,17 @@ export default function Home() {
         setRefreshKey(oldKey => oldKey + 1);
     };
 
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
     return (
         <div className="container mx-auto p-4">
-            <AddEntryForm key={refreshKey} initialEntry={null} onSave={handleSave}/>
+            {categories.length > 0 ? (
+                <AddEntryForm key={refreshKey} initialEntry={null} categories={categories} onSave={handleSave} />
+            ) : (
+                <div>Loading categories...</div>
+            )}
         </div>
     );
 }
