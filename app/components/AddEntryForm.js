@@ -30,7 +30,6 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
                 claim_amount: initialEntry.claim_amount,
             });
         }
-
     }, [initialEntry]);
 
     const handleClaimFlagChange = (e) => {
@@ -100,6 +99,7 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
                 <input
                     type="number"
                     name="amount"
+                    value={entry.amount}
                     onChange={(e) => setEntry({ ...entry, amount: Number(e.target.value) })}
                     required
                     className={inputClass}
@@ -145,6 +145,7 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
                 <input
                     type="number"
                     name="claimAmount"
+                    value={entry.claim_amount}
                     onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
                     className={inputClass}
                 />
