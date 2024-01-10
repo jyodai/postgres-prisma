@@ -29,8 +29,6 @@ model dev_entry {
   claim_flag   Int
   claim_amount Int
   category     dev_categories? @relation(fields: [category_id], references: [id])
-
-  @@unique([date, category_id])
 }
 
 model dev_categories {
