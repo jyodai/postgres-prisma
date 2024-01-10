@@ -14,29 +14,6 @@ export const getEntriesFromSheet = async (): Promise<Entry[]> => {
   return convertEntries;
 };
 
-async function getAccessToken() {
-    const payload = new URLSearchParams({
-        client_id: process.env.NEXT_PUBLIC_CLIENT_ID as string,
-        client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET as string,
-        refresh_token: process.env.NEXT_PUBLIC_REFRESH_TOKEN as string,
-        grant_type: 'refresh_token'
-    });
-
-    const response = await fetch(
-        process.env.NEXT_PUBLIC_TOKEN_URL as string,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body : payload.toString(),
-        }
-    )
-
-    const data = await response.json();
-    return data.access_token;
-}
-
 export const addEntryToSheet = async (entry: Entry) => {
     await fetch(
         '/api/entry',
@@ -52,8 +29,6 @@ export const addEntryToSheet = async (entry: Entry) => {
 };
 
 export const deleteEntryFromSheet = async (id: number) => {
-    const accessToken = await getAccessToken();
-
     await fetch(
         `/api/entry/${id}`,
         {
@@ -68,17 +43,14 @@ export const deleteEntryFromSheet = async (id: number) => {
 };
 
 export const editEntryInSheet = async (id: number, updatedEntry: Entry) => {
-    const accessToken = await getAccessToken();
-
     await fetch(
-        process.env.NEXT_PUBLIC_SCRIPT_URL as string,
+        `/api/entry/${id}`,
         {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`,
             },
-            body : JSON.stringify({function: 'editData', parameters: [id, updatedEntry]})
+            body : JSON.stringify(updatedEntry)
         }
     )
 
