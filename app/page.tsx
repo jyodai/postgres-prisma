@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import EntryList from '@/app/components/EntryList';
 import AddEntryForm from '@/app/components/AddEntryForm';
 import { getEntriesFromSheet, deleteEntryFromSheet, editEntryInSheet, getCategory } from '@/services/sheetService';
-import { Entry } from '@/types/types';
+import { Entry, Category } from '@/types/types';
 
 export default function Home() {
     const [entries, setEntries] = useState<Entry[]>([]);
