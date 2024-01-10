@@ -55,14 +55,12 @@ export const deleteEntryFromSheet = async (id: number) => {
     const accessToken = await getAccessToken();
 
     await fetch(
-        process.env.NEXT_PUBLIC_SCRIPT_URL as string,
+        `/api/entry/${id}`,
         {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`,
             },
-            body : JSON.stringify({function: 'deleteData', parameters: [id]})
         }
     )
 
