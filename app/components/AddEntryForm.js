@@ -99,7 +99,7 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
                 <input
                     type="number"
                     name="amount"
-                    value={entry.amount}
+                    value={entry.amount === 0 ? "" : entry.amount}
                     onChange={(e) => setEntry({ ...entry, amount: Number(e.target.value) })}
                     required
                     className={inputClass}
@@ -145,7 +145,7 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
                 <input
                     type="number"
                     name="claimAmount"
-                    value={entry.claim_amount}
+                    value={entry.claim_amount === 0 ? "" : entry.claim_amount}
                     onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
                     className={inputClass}
                 />
