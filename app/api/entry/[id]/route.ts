@@ -38,7 +38,7 @@ export const PATCH = async (req: Request) => {
 
     return NextResponse.json({ message: '更新成功', updatedEntry }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: '更新失敗', error: error.message }, { status: 500 });
+    return NextResponse.json({ messeage: "更新失敗" }, { status: 500 })
   } finally {
   }
 };
