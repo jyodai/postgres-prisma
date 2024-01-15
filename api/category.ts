@@ -1,3 +1,4 @@
+import prisma from '@/lib/prisma'
 import { Category } from '@/types/types';
 
 export const getCategory = async (): Promise<Category[]> => {

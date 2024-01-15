@@ -1,3 +1,4 @@
+import prisma from '@/lib/prisma'
 import { Entry, Category } from '@/types/types';
 import { dateUtils } from '@/utils/date';
 
