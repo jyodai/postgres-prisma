@@ -1,4 +1,5 @@
 import { Entry, Category } from '@/types/types';
+import { dateUtils } from '@/utils/date';
 
 export const getEntriesFromSheet = async (): Promise<Entry[]> => {
   const res = await fetch('/api/entry');
@@ -8,7 +9,7 @@ export const getEntriesFromSheet = async (): Promise<Entry[]> => {
   const convertEntries = entries.map((entry: Entry) => {
     return {
       ...entry,
-      date: new Date(entry.date),
+      date: dateUtils.formatDateToDateTimeLocal(new Date(entry.date)),
     };
   });
   return convertEntries;
