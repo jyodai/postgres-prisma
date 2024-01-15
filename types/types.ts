@@ -2,7 +2,7 @@ export interface Entry {
     id : number;
     date: Date;
     category_id: number;
-    amount: string;
+    amount: number;
     store: string;
     memo: string;
     claim_flag: number;
