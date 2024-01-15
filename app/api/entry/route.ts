@@ -1,14 +1,10 @@
 import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
+import { getEntry } from '@/api/entry'
 
 export const GET = async (req: Request) => {
     try {
-        const entries = await prisma.dev_entry.findMany({
-            include: {
-                category: true,
-            },
-        });
-
+        const entries = await getEntry();
         return NextResponse.json({entries},{ status: 200 })
     } catch (error) {
         return NextResponse.json({ messeage: "Error" },{ status: 500 })
