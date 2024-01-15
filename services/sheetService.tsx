@@ -9,7 +9,7 @@ export const getEntriesFromSheet = async (): Promise<Entry[]> => {
   const convertEntries = entries.map((entry: Entry) => {
     return {
       ...entry,
-      date: dateUtils.formatDateToDateTimeLocal(new Date(entry.date)),
+      date: new Date(entry.date),
     };
   });
   return convertEntries;

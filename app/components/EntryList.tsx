@@ -51,7 +51,7 @@ const EntryList = (props) => {
                     {entries.map((entry, index) => (
                         <li key={index} className="flex justify-between items-center p-4 border-b border-gray-200 last:border-0">
                             <div className="flex-grow">
-                                <div className="text-sm text-gray-600">{entry.date}</div>
+                                <div className="text-sm text-gray-600">{dateUtils.formatDateToDateTimeLocal(entry.date)}</div>
                                 <div className="text-lg font-medium">{entry.category.name}</div>
                                 <div className="text-gray-800">{entry.amount} 円</div>
                                 <div className="text-gray-500 italic">{entry.store}</div>

@@ -8,13 +8,5 @@ export const getEntry = async (): Promise<Entry[]> => {
             category: true,
         },
     });
-
-    const convertEntries = entries.map((entry: Entry) => {
-      return {
-        ...entry,
-        date: dateUtils.formatDateToDateTimeLocal(entry.date),
-      };
-    });
-
-    return convertEntries;
+    return entries;
 };
