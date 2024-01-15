@@ -6,7 +6,12 @@ import { dateUtils } from '@/utils/date';
 import { getEntriesFromSheet, deleteEntryFromSheet, editEntryInSheet, getCategory } from '@/services/sheetService';
 import { Entry, Category } from '@/types/types';
 
-const EntryList = (props) => {
+interface Props {
+  entries: Entry[];
+  categories: Category[];
+}
+
+const EntryList = (props: Props) => {
     const [entries, setEntries] = useState<Entry[]>(props.entries);
     const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
