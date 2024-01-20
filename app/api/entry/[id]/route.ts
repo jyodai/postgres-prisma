@@ -1,9 +1,22 @@
+import { findEntry } from '@/api/entry';
 import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 type Params = {
     id: string;
 };
+
+export const GET = async (req: Request, { params }: { params: Params }) => {
+    try {
+        const targetId:number = Number(params.id);
+        const entry = await findEntry(targetId);
+
+        return NextResponse.json({entry},{ status: 200 })
+    } catch (error) {
+        return NextResponse.json({ messeage: "Error" },{ status: 500 })
+    } finally {
+    }
+}
 
 export const DELETE = async (req: Request, { params }: { params: Params }) => {
     try {
