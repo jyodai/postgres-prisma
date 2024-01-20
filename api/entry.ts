@@ -3,7 +3,7 @@ import { Entry, Category } from '@/types/types';
 import { dateUtils } from '@/utils/date';
 
 export const findEntry = async (id: number): Promise<Entry> => {
-    const entrie = await prisma.dev_entry.findUnique({
+    const entry = await prisma.dev_entry.findUnique({
         where: {
           id
         },
@@ -11,7 +11,12 @@ export const findEntry = async (id: number): Promise<Entry> => {
             category: true,
         },
     });
-    return entrie;
+
+    if (!entry) {
+      throw new Error('Entry not found.');
+    }
+
+    return entry;
 };
 
 export const getEntry = async (): Promise<Entry[]> => {
