@@ -10,7 +10,7 @@ interface Props {
 }
 
 const CategoryList = (props: Props) => {
-    const [categories, setCategories] = useState<Entry[]>(props.categories);
+    const [categories, setCategories] = useState<Category[]>(props.categories);
 
     const fetchCategories = async () => {
         const data = await getCategory();
