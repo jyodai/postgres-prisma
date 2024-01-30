@@ -40,11 +40,11 @@ npm_dev :
 	'
 
 npm_lint :
-	docker-compose exec app /bin/bash -c ' \
+	docker-compose exec -T app /bin/bash -c ' \
 		npm run lint; \
 	'
 
 npm_tsc :
-	docker-compose exec app /bin/bash -c ' \
+	docker-compose exec -T app /bin/bash -c ' \
 		npm run tsc; \
 	'
