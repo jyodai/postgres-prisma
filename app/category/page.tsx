@@ -1,5 +1,5 @@
 import CategoryList from '@/app/components/CategoryList';
-import { getCategory, getcategory } from '@/api/category';
+import { getCategory } from '@/api/category';
 import {Category } from '@/types/types';
 
 export default async function Home() {
