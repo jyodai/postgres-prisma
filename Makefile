@@ -38,3 +38,8 @@ npm_dev :
 	docker-compose exec app /bin/bash -c ' \
 		npm run dev; \
 	'
+
+npm_tsc :
+	docker-compose exec app /bin/bash -c ' \
+		npm run tsc; \
+	'
