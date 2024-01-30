@@ -1,20 +1,9 @@
-"use client";
-import { useState, useEffect } from 'react';
 import CategoryList from '@/app/components/CategoryList';
-import { getCategory } from '@/services/sheetService';
+import { getCategory, getcategory } from '@/api/category';
 import {Category } from '@/types/types';
 
-export default function Home() {
-    const [categories, setCategory] = useState<Category[]>([]);
-
-    const fetchCategories = async () => {
-        const data = await getCategory();
-        setCategory(data);
-    };
-
-    useEffect(() => {
-        fetchCategories();
-    }, []);
+export default async function Home() {
+    const categories = await getCategory();
 
     return (
         <div className="container mx-auto p-4">
