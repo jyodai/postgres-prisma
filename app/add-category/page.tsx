@@ -5,7 +5,17 @@ import {Category } from '@/types/types';
 
 export default function Home() {
     const handleSave = async (category: Category) => {
-        console.log(category);
+      await fetch(
+          '/api/category',
+          {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body : JSON.stringify(category)
+          }
+      )
+      alert('登録完了');
     };
 
     return (
