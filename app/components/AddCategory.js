@@ -57,7 +57,7 @@ const AddCategory = ({ initialCategory, onSave }) => {
                 <select
                     name="type"
                     value={category.type}
-                    onChange={(e) => setCategory({ ...category, type: e.target.value })}
+                    onChange={(e) => setCategory({ ...category, type: Number(e.target.value) })}
                     className={inputClass}
                     required
                 >
