@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { dateUtils } from '@/utils/date';
 import { Category } from '@/types/types';
 import { getCategory } from '@/services/sheetService';
+import { Constants } from '@/constants';
 import AddCategory from '@/app/components/AddCategory';
 
 interface Props {
@@ -70,10 +71,14 @@ const CategoryList = (props: Props) => {
                       <li key={index} className="flex justify-between items-center p-4 border-b border-gray-200 last:border-0">
                           <div className="flex-grow">
                               <div className="text-gray-500 italic">{category.name}</div>
-                              <div className="text-gray-500 italic">{category.type}</div>
+                              {category.type === Constants.CATEGORY_TYPE_EXPENSE ? (
+                                <div className="text-gray-500 italic">支出</div>
+                              ) : (
+                                <div className="text-gray-500 italic">収入</div>
+                              )
+                              }
                               <div className="text-gray-500 italic">{category.color}</div>
                               <div className="text-gray-500 italic">{category.memo}</div>
-                              <div className="text-gray-500 italic">{category.sort}</div>
                           </div>
                           <div className="flex items-center space-x-2">
                                 <button onClick={() => onEdit(category)} className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">編集</button>
