@@ -49,6 +49,7 @@ const AddCategory = ({ initialCategory, onSave }) => {
                     value={category.name}
                     onChange={(e) => setCategory({ ...category, name: e.target.value })}
                     className={inputClass}
+                    required
                 />
             </div>
 
