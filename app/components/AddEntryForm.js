@@ -69,124 +69,128 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
 
     return (
         <>
-          <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 shadow-lg rounded-lg bg-white">
-              <div className="mb-4">
-                  <label htmlFor="date" className="block text-sm font-medium text-gray-700">日付</label>
-                  <input
-                      type="datetime-local"
-                      name="date"
-                      value={entry.date instanceof Date ?
-                        dateUtils.formatDateToDateTimeLocal(entry.date) :
-                        dateUtils.formatDateToDateTimeLocal(new Date())
-                      }
-                      onChange={(e) => setEntry({ ...entry, date: new Date(e.target.value) })}
-                      required
-                      className={inputClass}
-                  />
-              </div>
-
-              <div className="mb-4">
-                  <label htmlFor="categoryType" className="block text-sm font-medium text-gray-700">カテゴリータイプ</label>
-                  <select
-                      name="categoryType"
-                      value={categoryType}
-                      onChange={(e) => setCategoryType(Number(e.target.value))}
-                      className={inputClass}
-                      required
-                  >
-                      <option value={Constants.CATEGORY_TYPE_EXPENSE}>支出</option>
-                      <option value={Constants.CATEGORY_TYPE_INCOME}>収入</option>
-                  </select>
-              </div>
-
-              <div className="mb-4">
-                  <label htmlFor="category" className="block text-sm font-medium text-gray-700">カテゴリ</label>
-                  <select
-                      name="category"
-                      value={entry.category_id}
-                      onChange={(e) => setEntry({ ...entry, category_id: Number(e.target.value) })}
-                      className={inputClass}
-                      required
-                  >
-                      {categories.filter(cat => cat.type === categoryType).map((category) => (
-                          <option key={category.id} value={category.id}>{category.name}</option>
-                      ))}
-                  </select>
-              </div>
-
-              <div className="mb-4">
-                  <label htmlFor="amount" className="block text-sm font-medium text-gray-700">金額</label>
-                  <input
-                      type="number"
-                      name="amount"
-                      value={entry.amount === 0 ? "" : entry.amount}
-                      onChange={(e) => setEntry({ ...entry, amount: Number(e.target.value) })}
-                      required
-                      className={inputClass}
-                  />
-                  <button type="button" onClick={() => handleCalculatorOpen('amount')}>電卓</button>
-              </div>
-
-              <div className="mb-4">
-                  <label htmlFor="store" className="block text-sm font-medium text-gray-700">店</label>
-                  <input
-                      type="text"
-                      name="store"
-                      value={entry.store}
-                      onChange={(e) => setEntry({ ...entry, store: e.target.value })}
-                      className={inputClass}
-                  />
-              </div>
-
-              <div className="mb-4">
-                  <label htmlFor="memo" className="block text-sm font-medium text-gray-700">メモ</label>
-                  <input
-                      type="text"
-                      name="memo"
-                      value={entry.memo}
-                      onChange={(e) => setEntry({ ...entry, memo: e.target.value })}
-                      className={inputClass}
-                  />
-              </div>
-
-              <div className="mb-4">
-                  <label htmlFor="claimFlag" className="block text-sm font-medium text-gray-700">請求する</label>
-                  <input
-                      type="checkbox"
-                      name="claimFlag"
-                      id="claimFlag"
-                      checked={entry.claim_flag === 1}
-                      onChange={handleClaimFlagChange}
-                      className="mt-1"
-                  />
-              </div>
-
-              <div className="mb-4">
-                  <label htmlFor="claimAmount" className="block text-sm font-medium text-gray-700">請求金額</label>
-                  <input
-                      type="number"
-                      name="claimAmount"
-                      value={entry.claim_amount === 0 ? "" : entry.claim_amount}
-                      onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
-                      disabled={entry.claim_flag !== 1}
-                      className={inputClass}
-                  />
-                  <button
-                      type="button"
-                      onClick={() => handleCalculatorOpen('claim_amount')}
-                      disabled={entry.claim_flag !== 1}
-                  >電卓</button>
-              </div>
-
-              <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  {entry.id ? '更新' : '追加'}
-              </button>
-          </form>
-          {showCalculator && (
+          {showCalculator ? (
+            <>
               <Calculator
                 onCalculate={applyCalculatorResult}
                 initialValue={calculatorTarget === "amount" ? entry.amount : entry.claim_amount}
               />
+              <button onClick={() => setShowCalculator(false)} >閉じる</button>
+            </>
+          ) : (
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 shadow-lg rounded-lg bg-white">
+                <div className="mb-4">
+                    <label htmlFor="date" className="block text-sm font-medium text-gray-700">日付</label>
+                    <input
+                        type="datetime-local"
+                        name="date"
+                        value={entry.date instanceof Date ?
+                          dateUtils.formatDateToDateTimeLocal(entry.date) :
+                          dateUtils.formatDateToDateTimeLocal(new Date())
+                        }
+                        onChange={(e) => setEntry({ ...entry, date: new Date(e.target.value) })}
+                        required
+                        className={inputClass}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="categoryType" className="block text-sm font-medium text-gray-700">カテゴリータイプ</label>
+                    <select
+                        name="categoryType"
+                        value={categoryType}
+                        onChange={(e) => setCategoryType(Number(e.target.value))}
+                        className={inputClass}
+                        required
+                    >
+                        <option value={Constants.CATEGORY_TYPE_EXPENSE}>支出</option>
+                        <option value={Constants.CATEGORY_TYPE_INCOME}>収入</option>
+                    </select>
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="category" className="block text-sm font-medium text-gray-700">カテゴリ</label>
+                    <select
+                        name="category"
+                        value={entry.category_id}
+                        onChange={(e) => setEntry({ ...entry, category_id: Number(e.target.value) })}
+                        className={inputClass}
+                        required
+                    >
+                        {categories.filter(cat => cat.type === categoryType).map((category) => (
+                            <option key={category.id} value={category.id}>{category.name}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="amount" className="block text-sm font-medium text-gray-700">金額</label>
+                    <input
+                        type="number"
+                        name="amount"
+                        value={entry.amount === 0 ? "" : entry.amount}
+                        onChange={(e) => setEntry({ ...entry, amount: Number(e.target.value) })}
+                        required
+                        className={inputClass}
+                    />
+                    <button type="button" onClick={() => handleCalculatorOpen('amount')}>電卓</button>
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="store" className="block text-sm font-medium text-gray-700">店</label>
+                    <input
+                        type="text"
+                        name="store"
+                        value={entry.store}
+                        onChange={(e) => setEntry({ ...entry, store: e.target.value })}
+                        className={inputClass}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="memo" className="block text-sm font-medium text-gray-700">メモ</label>
+                    <input
+                        type="text"
+                        name="memo"
+                        value={entry.memo}
+                        onChange={(e) => setEntry({ ...entry, memo: e.target.value })}
+                        className={inputClass}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="claimFlag" className="block text-sm font-medium text-gray-700">請求する</label>
+                    <input
+                        type="checkbox"
+                        name="claimFlag"
+                        id="claimFlag"
+                        checked={entry.claim_flag === 1}
+                        onChange={handleClaimFlagChange}
+                        className="mt-1"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="claimAmount" className="block text-sm font-medium text-gray-700">請求金額</label>
+                    <input
+                        type="number"
+                        name="claimAmount"
+                        value={entry.claim_amount === 0 ? "" : entry.claim_amount}
+                        onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
+                        disabled={entry.claim_flag !== 1}
+                        className={inputClass}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => handleCalculatorOpen('claim_amount')}
+                        disabled={entry.claim_flag !== 1}
+                    >電卓</button>
+                </div>
+
+                <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    {entry.id ? '更新' : '追加'}
+                </button>
+            </form>
           )}
         </>
     );
