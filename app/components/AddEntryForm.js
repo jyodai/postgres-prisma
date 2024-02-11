@@ -33,7 +33,8 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
     }, [initialEntry]);
 
     const handleClaimFlagChange = (e) => {
-      setEntry({ ...entry, claim_flag: e.target.checked ? 1 : 0 });
+      const isClaimed = e.target.checked ? 1 : 0;
+      setEntry({ ...entry, claim_flag: isClaimed, claim_amount: isClaimed ? entry.claim_amount : 0 });
     };
 
     const handleSubmit = async (e) => {
@@ -147,6 +148,7 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
                     name="claimAmount"
                     value={entry.claim_amount === 0 ? "" : entry.claim_amount}
                     onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
+                    disabled={entry.claim_flag !== 1}
                     className={inputClass}
                 />
             </div>
