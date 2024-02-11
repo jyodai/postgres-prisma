@@ -24,6 +24,9 @@ export const getEntry = async (): Promise<Entry[]> => {
         include: {
             category: true,
         },
+        orderBy: {
+            date: 'desc',
+        },
     });
     return entries;
 };
