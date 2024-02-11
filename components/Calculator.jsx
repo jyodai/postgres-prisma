@@ -12,7 +12,9 @@ const Calculator = ({ onCalculate, initialValue = '' }) => {
     const calculateResult = () => {
         try {
             const result = eval(input);
-            onCalculate(result);
+            if (result !== undefined) {
+                onCalculate(result);
+            }
             setInput('');
         } catch (error) {
             alert('Invalid expression');

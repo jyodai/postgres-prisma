@@ -73,9 +73,13 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
             <>
               <Calculator
                 onCalculate={applyCalculatorResult}
-                initialValue={calculatorTarget === "amount" ? entry.amount : entry.claim_amount}
+                initialValue={
+                  calculatorTarget === "amount"
+                    ? entry.amount === 0 ? "" : entry.amount.toString()
+                    : entry.claim_amount === 0 ? "" : entry.claim_amount.toString()
+                }
               />
-              <button onClick={() => setShowCalculator(false)} >閉じる</button>
+              <button onClick={() => setShowCalculator(false)}>閉じる</button>
             </>
           ) : (
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 shadow-lg rounded-lg bg-white">
