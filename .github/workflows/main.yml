@@ -15,7 +15,7 @@ jobs:
         run: docker compose up -d --wait
 
       - name: ESLint
-        run: make lint
+        run: make npm_lint
 
       - name: Check TypeScript
-        run: make tsc
+        run: make npm_tsc

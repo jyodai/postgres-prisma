@@ -12,3 +12,17 @@ export const GET = async (req: Request) => {
     } finally {
     }
 }
+
+export const POST = async (req: Request) => {
+  const data = await req.json();
+  try {
+    await prisma.dev_categories.create({
+      data,
+    });
+
+    return NextResponse.json({ 'message' : 'success' },{ status: 200 })
+  } catch (error) {
+    return NextResponse.json({ 'message' : 'failuer' },{ status: 500 })
+  } finally {
+  }
+}
