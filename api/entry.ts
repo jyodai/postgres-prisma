@@ -27,6 +27,7 @@ export const getEntry = async (): Promise<Entry[]> => {
         orderBy: {
             date: 'desc',
         },
+        take: 150,
     });
     return entries;
 };
