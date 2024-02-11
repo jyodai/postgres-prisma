@@ -77,7 +77,14 @@ const CategoryList = (props: Props) => {
                                 <div className="text-gray-500 italic">収入</div>
                               )
                               }
-                              <div className="text-gray-500 italic">{category.color}</div>
+                              <div className="text-gray-500 italic">
+                              <input
+                                  type="color"
+                                  name="color"
+                                  value={category.color}
+                                  disabled
+                              />
+                              </div>
                               <div className="text-gray-500 italic">{category.memo}</div>
                           </div>
                           <div className="flex items-center space-x-2">

@@ -70,7 +70,7 @@ const AddCategory = ({ initialCategory, onSave }) => {
             <div className="mb-4">
                 <label htmlFor="color" className="block text-sm font-medium text-gray-700">色</label>
                 <input
-                    type="text"
+                    type="color"
                     name="color"
                     value={category.color}
                     onChange={(e) => setCategory({ ...category, color: e.target.value })}
