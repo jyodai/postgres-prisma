@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { dateUtils } from '@/utils/date';
 import { Constants } from '@/constants';
+import Calculator from '@/components/Calculator';
 
 const AddEntryForm = ({ initialEntry, categories, onSave }) => {
     const [categoryType, setCategoryType] = useState(initialEntry?.category.type || Constants.CATEGORY_TYPE_EXPENSE);
@@ -49,7 +50,25 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
         sm:text-sm
     `;
 
+    const [showCalculator, setShowCalculator] = useState(false);
+    const [calculatorTarget, setCalculatorTarget] = useState(null);
+
+    const handleCalculatorOpen = (target) => {
+        setShowCalculator(true);
+        setCalculatorTarget(target);
+    };
+
+    const applyCalculatorResult = (result) => {
+        if (calculatorTarget === 'amount') {
+            setEntry({ ...entry, amount: result });
+        } else if (calculatorTarget === 'claim_amount') {
+            setEntry({ ...entry, claim_amount: result });
+        }
+        setShowCalculator(false);
+    };
+
     return (
+        <>
         <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 shadow-lg rounded-lg bg-white">
             <div className="mb-4">
                 <label htmlFor="date" className="block text-sm font-medium text-gray-700">日付</label>
@@ -105,6 +124,7 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
                     required
                     className={inputClass}
                 />
+                <button type="button" onClick={() => handleCalculatorOpen('amount')}>電卓</button>
             </div>
 
             <div className="mb-4">
@@ -151,12 +171,24 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
                     disabled={entry.claim_flag !== 1}
                     className={inputClass}
                 />
+                <button
+                    type="button"
+                    onClick={() => handleCalculatorOpen('claim_amount')}
+                    disabled={entry.claim_flag !== 1}
+                >電卓</button>
             </div>
 
             <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 {entry.id ? '更新' : '追加'}
             </button>
         </form>
+        {showCalculator && (
+            <Calculator
+              onCalculate={applyCalculatorResult}
+              initialValue={calculatorTarget === "amount" ? entry.amount : entry.claim_amount}
+            />
+        )}
+        </>
     );
 };
 
