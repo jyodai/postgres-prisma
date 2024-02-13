@@ -25,12 +25,12 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="container mx-auto p-4">
-            {categories.length > 0 ? (
-                <AddEntryForm key={refreshKey} initialEntry={null} categories={categories} onSave={handleSave} />
-            ) : (
-                <div>Loading categories...</div>
-            )}
-        </div>
+      <div className="container mx-auto p-4">
+        {categories.length > 0 ? (
+            <AddEntryForm key={refreshKey} initialEntry={null} categories={categories} onSave={handleSave} />
+        ) : (
+            <div>Loading categories...</div>
+        )}
+      </div>
     );
 }
