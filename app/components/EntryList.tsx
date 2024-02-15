@@ -8,6 +8,10 @@ import { Entry, Category } from '@/types/types';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CurrencyYenIcon from '@mui/icons-material/CurrencyYen';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import CategoryIcon from '@mui/icons-material/Category';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
@@ -71,10 +75,12 @@ const EntryList = (props: Props) => {
                       <CardContent sx={{ cursor: 'pointer' }} onClick={() => onEdit(entry)}>
                         <div>
                             <div>{dateUtils.formatDateToDateTimeLocal(entry.date)}</div>
-                            <div>{entry.amount} 円</div>
-                            <div>{entry.category ? entry.category.name : 'No Category'}</div>
-                            <div>{entry.store}</div>
-                            <div>{entry.memo}</div>
+                            <div className="flex items-center text-lg"><CurrencyYenIcon/>{entry.amount}</div>
+                            <div className="flex items-center">
+                              <CategoryIcon/>{entry.category ? entry.category.name : 'No Category'}
+                            </div>
+                            <div className="flex items-center"><StorefrontIcon/>{entry.store}</div>
+                            <div className="flex items-center"><AssignmentIcon/>{entry.memo}</div>
                         </div>
                         <div>
                             <DeleteIcon sx={{ cursor: 'pointer' }} onClick={() => onDelete(entry.id)} >削除</DeleteIcon>
