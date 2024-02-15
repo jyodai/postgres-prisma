@@ -14,6 +14,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 
 interface Props {
@@ -58,6 +59,14 @@ const EntryList = (props: Props) => {
         fetchEntries();
     };
 
+    const formatDate = (date: Date) => {
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = ('0' + (d.getMonth() + 1)).slice(-2); // 月は0から始まるため+1する
+      const day = ('0' + d.getDate()).slice(-2);
+      return `${year}/${month}/${day}`;
+    }
+
     return (
         <ThemeProvider theme={darkTheme}>
           <div className="p-4">
@@ -71,22 +80,31 @@ const EntryList = (props: Props) => {
               ) : (
                 <div>
                   {entries.map((entry, index) => (
-                    <Card key="entry.id" className="mb-4">
-                      <CardContent sx={{ cursor: 'pointer' }} onClick={() => onEdit(entry)}>
-                        <div>
-                            <div>{dateUtils.formatDateToDateTimeLocal(entry.date)}</div>
-                            <div className="flex items-center text-lg"><CurrencyYenIcon/>{entry.amount}</div>
-                            <div className="flex items-center">
-                              <CategoryIcon/>{entry.category ? entry.category.name : 'No Category'}
-                            </div>
-                            <div className="flex items-center"><StorefrontIcon/>{entry.store}</div>
-                            <div className="flex items-center"><AssignmentIcon/>{entry.memo}</div>
+                    <>
+                      {(index === 0 || formatDate(entry.date) !== formatDate(entries[index - 1].date)) && (
+                        <div className="mb-4">
+                          <Typography variant="subtitle1" component="strong" color="white">
+                            {formatDate(entry.date)}
+                          </Typography>
                         </div>
-                        <div>
-                            <DeleteIcon sx={{ cursor: 'pointer' }} onClick={() => onDelete(entry.id)} >削除</DeleteIcon>
-                        </div>
-                      </CardContent>
-                    </Card>
+                      )}
+
+                      <Card key="entry.id" className="mb-4">
+                        <CardContent sx={{ cursor: 'pointer' }} onClick={() => onEdit(entry)}>
+                          <div>
+                              <div className="flex items-center text-lg"><CurrencyYenIcon/>{entry.amount}</div>
+                              <div className="flex items-center">
+                                <CategoryIcon/>{entry.category ? entry.category.name : 'No Category'}
+                              </div>
+                              <div className="flex items-center"><StorefrontIcon/>{entry.store}</div>
+                              <div className="flex items-center"><AssignmentIcon/>{entry.memo}</div>
+                          </div>
+                          <div>
+                              <DeleteIcon sx={{ cursor: 'pointer' }} onClick={() => onDelete(entry.id)} >削除</DeleteIcon>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </>
                   ))}
                 </div>
               )}
