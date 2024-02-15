@@ -8,6 +8,8 @@ import { Entry, Category } from '@/types/types';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 
 interface Props {
@@ -54,7 +56,7 @@ const EntryList = (props: Props) => {
 
     return (
         <ThemeProvider theme={darkTheme}>
-          <div className="container mx-auto p-4">
+          <div className="p-4">
               {editingEntry ? (
                   <>
                       <AddEntryForm initialEntry={editingEntry} categories={categories} onSave={handleSave} />
@@ -63,23 +65,24 @@ const EntryList = (props: Props) => {
                       </button>
                   </>
               ) : (
-                  <ul className="max-w-2xl mx-auto p-4 bg-white rounded-lg shadow">
-                      {entries.map((entry, index) => (
-                          <li key={index} className="flex justify-between items-center p-4 border-b border-gray-200 last:border-0">
-                              <div className="flex-grow">
-                                  <div className="text-sm text-gray-600">{dateUtils.formatDateToDateTimeLocal(entry.date)}</div>
-                                  <div className="text-lg font-medium">{entry.category ? entry.category.name : 'No Category'}</div>
-                                  <div className="text-gray-800">{entry.amount} 円</div>
-                                  <div className="text-gray-500 italic">{entry.store}</div>
-                                  <div className="text-gray-500 italic">{entry.memo}</div>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                  <EditIcon sx={{ cursor: 'pointer' }} onClick={() => onEdit(entry)}>編集</EditIcon>
-                                  <DeleteIcon sx={{ cursor: 'pointer' }} onClick={() => onDelete(entry.id)} >削除</DeleteIcon>
-                              </div>
-                          </li>
-                      ))}
-                  </ul>
+                <div>
+                  {entries.map((entry, index) => (
+                    <Card key="entry.id" className="mb-4">
+                      <CardContent sx={{ cursor: 'pointer' }} onClick={() => onEdit(entry)}>
+                        <div>
+                            <div>{dateUtils.formatDateToDateTimeLocal(entry.date)}</div>
+                            <div>{entry.amount} 円</div>
+                            <div>{entry.category ? entry.category.name : 'No Category'}</div>
+                            <div>{entry.store}</div>
+                            <div>{entry.memo}</div>
+                        </div>
+                        <div>
+                            <DeleteIcon sx={{ cursor: 'pointer' }} onClick={() => onDelete(entry.id)} >削除</DeleteIcon>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               )}
           </div>
         </ThemeProvider>
