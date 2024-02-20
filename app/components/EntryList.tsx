@@ -59,14 +59,6 @@ const EntryList = (props: Props) => {
         fetchEntries();
     };
 
-    const formatDate = (date: Date) => {
-      const d = new Date(date);
-      const year = d.getFullYear();
-      const month = ('0' + (d.getMonth() + 1)).slice(-2); // 月は0から始まるため+1する
-      const day = ('0' + d.getDate()).slice(-2);
-      return `${year}/${month}/${day}`;
-    }
-
     return (
         <ThemeProvider theme={darkTheme}>
           <div className="p-4">
@@ -81,10 +73,10 @@ const EntryList = (props: Props) => {
                 <div>
                   {entries.map((entry, index) => (
                     <>
-                      {(index === 0 || formatDate(entry.date) !== formatDate(entries[index - 1].date)) && (
+                      {(index === 0 || dateUtils.formatDate(entry.date) !== dateUtils.formatDate(entries[index - 1].date)) && (
                         <div className="mb-4">
                           <Typography variant="subtitle1" component="strong" color="white">
-                            {formatDate(entry.date)}
+                            {dateUtils.formatDate(entry.date)}
                           </Typography>
                         </div>
                       )}
