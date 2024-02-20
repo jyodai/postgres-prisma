@@ -16,8 +16,15 @@ const formatDate = (date: Date): string => {
   return `${year}/${month}/${day}`;
 }
 
+const getDayOfWeek = (date: Date): string => {
+  const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
+  const dayIndex = date.getDay();
+  return daysOfWeek[dayIndex];
+}
+
 export const dateUtils = {
     formatDateToDateTimeLocal,
     formatDate,
+    getDayOfWeek,
 };
 
