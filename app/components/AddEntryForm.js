@@ -6,6 +6,7 @@ import { Constants } from '@/constants';
 import Calculator from '@/components/Calculator';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Checkbox, FormControlLabel } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CalculateIcon from '@mui/icons-material/Calculate';
 
 const darkTheme = createTheme({
   palette: {
@@ -130,12 +131,12 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
               label="金額"
               type="number"
               value={entry.amount === 0 ? "" : entry.amount}
+              onClick={() => handleCalculatorOpen('amount')}
               onChange={(e) => setEntry({ ...entry, amount: Number(e.target.value) })}
               required
               fullWidth
               margin="normal"
             />
-            <Button variant="contained" onClick={() => handleCalculatorOpen('amount')} sx={{ mt: 1 }}>電卓</Button>
 
             <TextField
               label="店"
@@ -166,23 +167,18 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
               sx={{ mt: 2 }}
             />
 
-            <TextField
-              label="請求金額"
-              type="number"
-              value={entry.claim_amount === 0 ? "" : entry.claim_amount}
-              onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
-              disabled={entry.claim_flag !== 1}
-              fullWidth
-              margin="normal"
-            />
-            <Button
-              variant="contained"
-              onClick={() => handleCalculatorOpen('claim_amount')}
-              disabled={entry.claim_flag !== 1}
-              sx={{ mt: 1 }}
-            >
-              電卓
-            </Button>
+            <div className="flex items-center justify-between ">
+              <TextField
+                label="請求金額"
+                type="number"
+                value={entry.claim_amount === 0 ? "" : entry.claim_amount}
+                onClick={(e) => handleCalculatorOpen('claim_amount')}
+                onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
+                disabled={entry.claim_flag !== 1}
+                fullWidth
+                margin="normal"
+              />
+            </div>
 
             <Button
               type="submit"
