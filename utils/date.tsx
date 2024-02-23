@@ -8,7 +8,23 @@ const formatDateToDateTimeLocal = (date: Date): string => {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 
+const formatDate = (date: Date): string => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = ('0' + (d.getMonth() + 1)).slice(-2); // 月は0から始まるため+1する
+  const day = ('0' + d.getDate()).slice(-2);
+  return `${year}/${month}/${day}`;
+}
+
+const getDayOfWeek = (date: Date): string => {
+  const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
+  const dayIndex = date.getDay();
+  return daysOfWeek[dayIndex];
+}
+
 export const dateUtils = {
     formatDateToDateTimeLocal,
+    formatDate,
+    getDayOfWeek,
 };
 
