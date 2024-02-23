@@ -7,7 +7,7 @@ import { getEntriesFromSheet, deleteEntryFromSheet, editEntryInSheet, getCategor
 import { Entry, Category } from '@/types/types';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import ClearIcon from '@mui/icons-material/Clear';
 import CurrencyYenIcon from '@mui/icons-material/CurrencyYen';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -44,7 +44,8 @@ const EntryList = (props: Props) => {
         setCategories(data);
     };
 
-    const onDelete = async (id: number) => {
+    const onDelete = async (e: React.MouseEvent<SVGSVGElement, MouseEvent>, id: number) => {
+        e.stopPropagation();
         await deleteEntryFromSheet(id);
         fetchEntries();
     };
@@ -84,15 +85,15 @@ const EntryList = (props: Props) => {
                       <Card key="entry.id" className="mb-4">
                         <CardContent sx={{ cursor: 'pointer' }} onClick={() => onEdit(entry)}>
                           <div>
-                              <div className="flex items-center text-lg"><CurrencyYenIcon/>{entry.amount}</div>
+                              <div className="flex items-center justify-between text-lg">
+                                <div className="flex items-center"><CurrencyYenIcon/>{entry.amount}</div>
+                                <ClearIcon className="cursor-pointer" onClick={(e) => onDelete(e, entry.id)}/>
+                              </div>
                               <div className="flex items-center">
                                 <CategoryIcon/>{entry.category ? entry.category.name : 'No Category'}
                               </div>
                               <div className="flex items-center"><StorefrontIcon/>{entry.store}</div>
                               <div className="flex items-center"><AssignmentIcon/>{entry.memo}</div>
-                          </div>
-                          <div>
-                              <DeleteIcon sx={{ cursor: 'pointer' }} onClick={() => onDelete(entry.id)} >削除</DeleteIcon>
                           </div>
                         </CardContent>
                       </Card>
