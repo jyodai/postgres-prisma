@@ -76,7 +76,7 @@ const EntryList = (props: Props) => {
               ) : (
                 <div>
                   {entries.map((entry, index) => (
-                    <>
+                    <div key="entry.id">
                       {(index === 0 || dateUtils.formatDate(entry.date) !== dateUtils.formatDate(entries[index - 1].date)) && (
                         <div className="mb-4">
                           <Typography variant="subtitle1" component="strong" color="white">
@@ -85,7 +85,7 @@ const EntryList = (props: Props) => {
                         </div>
                       )}
 
-                      <Card key="entry.id" className="mb-4">
+                      <Card className="mb-4">
                         <CardContent sx={{ cursor: 'pointer' }} onClick={() => onEdit(entry)}>
                           <div>
                               <div className="flex items-center justify-between text-lg">
@@ -100,7 +100,7 @@ const EntryList = (props: Props) => {
                           </div>
                         </CardContent>
                       </Card>
-                    </>
+                    </div>
                   ))}
                 </div>
               )}
