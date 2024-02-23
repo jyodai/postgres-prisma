@@ -46,6 +46,9 @@ const EntryList = (props: Props) => {
 
     const onDelete = async (e: React.MouseEvent<SVGSVGElement, MouseEvent>, id: number) => {
         e.stopPropagation();
+        if (!confirm('削除しますか?')) {
+          return;
+        }
         await deleteEntryFromSheet(id);
         fetchEntries();
     };
