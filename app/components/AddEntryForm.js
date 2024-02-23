@@ -17,9 +17,17 @@ const darkTheme = createTheme({
 const AddEntryForm = ({ initialEntry, categories, onSave }) => {
     const [categoryType, setCategoryType] = useState(initialEntry?.category.type || Constants.CATEGORY_TYPE_EXPENSE);
 
+    const getDefaultCategoryId = () => {
+      if(categories.length === 0) {
+        return 0;
+      }
+      const defaultCategory = categories.find(category => category.type === Constants.CATEGORY_TYPE_EXPENSE);
+      return defaultCategory ? defaultCategory.id : 0;
+    }
+
     const [entry, setEntry] = useState({
         date:  dateUtils.formatDateToDateTimeLocal(new Date()),
-        category_id: initialEntry?.category_id || categories.length === 0 ? 0 : categories[0].id,
+        category_id: initialEntry?.category_id || getDefaultCategoryId(),
         amount: initialEntry?.amount || 0,
         store: initialEntry?.store || '',
         memo: initialEntry?.memo || '',
