@@ -175,18 +175,20 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
               sx={{ mt: 2 }}
             />
 
-            <div className="flex items-center justify-between ">
-              <TextField
-                label="請求金額"
-                type="number"
-                value={entry.claim_amount === 0 ? "" : entry.claim_amount}
-                onClick={(e) => handleCalculatorOpen('claim_amount')}
-                onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
-                disabled={entry.claim_flag !== 1}
-                fullWidth
-                margin="normal"
-              />
-            </div>
+            {entry.claim_flag === 1 && (
+              <div className="flex items-center justify-between">
+                <TextField
+                  label="請求金額"
+                  type="number"
+                  value={entry.claim_amount === 0 ? "" : entry.claim_amount}
+                  onClick={(e) => handleCalculatorOpen('claim_amount')}
+                  onChange={(e) => setEntry({ ...entry, claim_amount: Number(e.target.value) })}
+                  disabled={entry.claim_flag !== 1}
+                  fullWidth
+                  margin="normal"
+                />
+              </div>
+            )}
 
             <Button
               type="submit"
