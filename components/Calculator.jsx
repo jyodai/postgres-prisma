@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 const Calculator = ({ onCalculate, initialValue = '' }) => {
     const [input, setInput] = useState(initialValue);
@@ -23,40 +27,48 @@ const Calculator = ({ onCalculate, initialValue = '' }) => {
     };
 
     return (
-        <div className="calculator">
-            <input type="text" value={input} readOnly className="calculator-input" />
-            <div className="calculator-buttons">
-                <div className="calculator-row">
-                    {'789/'.split('').map((char) => (
-                        <button key={char} onClick={handleInput(char)}>{char}</button>
-                    ))}
-                </div>
-                <div className="calculator-row">
-                    {'456*'.split('').map((char) => (
-                        <button key={char} onClick={handleInput(char)}>{char}</button>
-                    ))}
-                </div>
-                <div className="calculator-row">
-                    {'123-'.split('').map((char) => (
-                        <button key={char} onClick={handleInput(char)}>{char}</button>
-                    ))}
-                </div>
-                <div className="calculator-row">
-                    {'0.'.split('').map((char) => (
-                        <button key={char} onClick={handleInput(char)}>{char}</button>
-                    ))}
-                    <button onClick={handleInput('+')}>+</button>
-                    <button onClick={calculateResult}>=</button>
-                </div>
-                <div className="calculator-row">
-                    <button onClick={() => setInput('')} className="clear-button">C</button>
-                    <button onClick={deleteLastChar} className="backspace-button">←</button>
-                </div>
-            </div>
-        </div>
+        <Box sx={{ flexGrow: 1 }}>
+            <TextField
+                value={input}
+                variant="outlined"
+                InputProps={{
+                    readOnly: true,
+                }}
+                fullWidth
+                margin="normal"
+            />
+            <Grid container spacing={1}>
+                <Grid item xs={6}>
+                    <Button variant="contained" onClick={() => setInput('')} fullWidth>C</Button>
+                </Grid>
+                <Grid item xs={6}>
+                    <Button variant="contained" onClick={deleteLastChar} fullWidth>←</Button>
+                </Grid>
+                {['789/', '456*', '123-', '0.+'].map((row, rowIndex) => (
+                    <Grid key={rowIndex} container item spacing={1}>
+                        {rowIndex === 3 && (
+                            <Grid item xs={3}>
+                                <Button variant="contained" onClick={handleInput('00')} fullWidth>
+                                    00
+                                </Button>
+                            </Grid>
+                        )}
+                        {row.split('').map((char) => (
+                            <Grid item xs={3} key={char}>
+                                <Button variant="contained" onClick={handleInput(char)} fullWidth>
+                                    {char}
+                                </Button>
+                            </Grid>
+                        ))}
+                    </Grid>
+                ))}
+                <Grid item xs={12}>
+                    <Button variant="contained" onClick={calculateResult} fullWidth>=</Button>
+                </Grid>
+            </Grid>
+        </Box>
     );
 };
 
 export default Calculator;
-
 

@@ -7,6 +7,7 @@ import Calculator from '@/components/Calculator';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Checkbox, FormControlLabel } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CalculateIcon from '@mui/icons-material/Calculate';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const darkTheme = createTheme({
   palette: {
@@ -88,15 +89,19 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
       <ThemeProvider theme={darkTheme}>
         {showCalculator ? (
           <>
-            <Calculator
-              onCalculate={applyCalculatorResult}
-              initialValue={
-                calculatorTarget === "amount"
-                  ? entry.amount === 0 ? "" : entry.amount.toString()
-                  : entry.claim_amount === 0 ? "" : entry.claim_amount.toString()
-              }
-            />
-            <Button variant="contained" onClick={() => setShowCalculator(false)}>閉じる</Button>
+            <div key='editing' className="flex flex-col">
+              <div className="flex justify-end">
+                <ClearIcon className="cursor-pointer" onClick={(e) => setShowCalculator(false)} />
+              </div>
+              <Calculator
+                onCalculate={applyCalculatorResult}
+                initialValue={
+                  calculatorTarget === "amount"
+                    ? entry.amount === 0 ? "" : entry.amount.toString()
+                    : entry.claim_amount === 0 ? "" : entry.claim_amount.toString()
+                }
+              />
+            </div>
           </>
         ) : (
           <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 'lg'}}>
