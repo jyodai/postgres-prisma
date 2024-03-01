@@ -78,7 +78,7 @@ const EntryList = (props: Props) => {
               ) : (
                 <div>
                   {entries.map((entry, index) => (
-                    <div key="entry.id">
+                    <div key={entry.id}>
                       {(index === 0 || dateUtils.formatDate(entry.date) !== dateUtils.formatDate(entries[index - 1].date)) && (
                         <div className="mb-4">
                           <Typography variant="subtitle1" component="strong" color="white">
