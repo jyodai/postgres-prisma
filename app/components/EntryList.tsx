@@ -95,7 +95,7 @@ const EntryList = (props: Props) => {
                                 <ClearIcon className="cursor-pointer" onClick={(e) => onDelete(e, entry.id)}/>
                               </div>
                               <div className="flex items-center">
-                                <CategoryIcon/>{entry.category ? entry.category.name : 'No Category'}
+                                <CategoryIcon sx={{ color: entry.category.color }} />{entry.category ? entry.category.name : 'No Category'}
                               </div>
                               <div className="flex items-center"><StorefrontIcon/>{entry.store}</div>
                               <div className="flex items-center"><AssignmentIcon/>{entry.memo}</div>
