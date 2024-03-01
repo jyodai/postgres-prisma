@@ -10,7 +10,7 @@ export const findEntry = async (id: number): Promise<Entry> => {
         include: {
             category: true,
         },
-    });
+    }) as Entry;
 
     if (!entry) {
       throw new Error('Entry not found.');
@@ -28,6 +28,6 @@ export const getEntry = async (): Promise<Entry[]> => {
             date: 'desc',
         },
         take: 150,
-    });
+    }) as Entry[];
     return entries;
 };

@@ -7,7 +7,7 @@ export interface Entry {
     memo: string;
     claim_flag: number;
     claim_amount : number;
-    category: Category | null;
+    category: Category;
 }
 
 export interface Category {
