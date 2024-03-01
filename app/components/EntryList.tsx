@@ -87,7 +87,7 @@ const EntryList = (props: Props) => {
                         </div>
                       )}
 
-                      <Card className="mb-4">
+                      <Card className="mb-4 ml-4">
                         <CardContent sx={{ cursor: 'pointer' }} onClick={() => onEdit(entry)}>
                           <div>
                               <div className="flex items-center justify-between text-lg">
