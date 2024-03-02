@@ -2,12 +2,20 @@
 
 import React, { useState, useEffect } from 'react';
 import { Constants } from '@/constants';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Checkbox, FormControlLabel } from '@mui/material';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 const AddCategory = ({ initialCategory, onSave }) => {
     const [category, setCategory] = useState({
         name: initialCategory?.name || '',
         type: initialCategory?.type || Constants.CATEGORY_TYPE_EXPENSE,
-        color: initialCategory?.color || '',
+        color: initialCategory?.color || '#FFFFFF',
         memo: initialCategory?.memo || '',
         sort: initialCategory?.sort || 0,
     });
@@ -39,60 +47,60 @@ const AddCategory = ({ initialCategory, onSave }) => {
     `;
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 shadow-lg rounded-lg bg-white">
+      <ThemeProvider theme={darkTheme}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 'lg'}}>
+            <TextField
+              label="カテゴリー名"
+              type="text"
+              value={category.name}
+              onChange={(e) => setCategory({ ...category, name: e.target.value })}
+              fullWidth
+              margin="normal"
+            />
 
-            <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">カテゴリー名</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={category.name}
-                    onChange={(e) => setCategory({ ...category, name: e.target.value })}
-                    className={inputClass}
-                    required
-                />
-            </div>
+          <FormControl fullWidth margin="normal">
+            <InputLabel>カテゴリータイプ</InputLabel>
+            <Select
+              label="カテゴリータイプ"
+              value={category.type}
+              onChange={(e) => setCategory({ ...category, type: Number(e.target.value) })}
+              required
+            >
+              <MenuItem value={Constants.CATEGORY_TYPE_EXPENSE}>支出</MenuItem>
+              <MenuItem value={Constants.CATEGORY_TYPE_INCOME}>収入</MenuItem>
+            </Select>
+          </FormControl>
 
-            <div className="mb-4">
-                <label htmlFor="type" className="block text-sm font-medium text-gray-700">カテゴリータイプ</label>
-                <select
-                    name="type"
-                    value={category.type}
-                    onChange={(e) => setCategory({ ...category, type: Number(e.target.value) })}
-                    className={inputClass}
-                    required
-                >
-                    <option value={Constants.CATEGORY_TYPE_EXPENSE}>支出</option>
-                    <option value={Constants.CATEGORY_TYPE_INCOME}>収入</option>
-                </select>
-            </div>
+          <TextField
+            label="色"
+            type="color"
+            value={category.color}
+            onChange={(e) => setCategory({ ...category, color: e.target.value })}
+            fullWidth
+            margin="normal"
+          />
 
-            <div className="mb-4">
-                <label htmlFor="color" className="block text-sm font-medium text-gray-700">色</label>
-                <input
-                    type="color"
-                    name="color"
-                    value={category.color}
-                    onChange={(e) => setCategory({ ...category, color: e.target.value })}
-                    className={inputClass}
-                />
-            </div>
+          <TextField
+            label="メモ"
+            type="text"
+            value={category.memo}
+            onChange={(e) => setCategory({ ...category, memo: e.target.value })}
+            fullWidth
+            margin="normal"
+          />
 
-            <div className="mb-4">
-                <label htmlFor="memo" className="block text-sm font-medium text-gray-700">メモ</label>
-                <input
-                    type="text"
-                    name="memo"
-                    value={category.memo}
-                    onChange={(e) => setCategory({ ...category, memo: e.target.value })}
-                    className={inputClass}
-                />
-            </div>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 3 }}
+          >
+            {category.id ? '更新' : '追加'}
+          </Button>
 
-            <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {category.id ? '更新' : '追加'}
-            </button>
-        </form>
+        </Box>
+      </ThemeProvider>
     );
 };
 

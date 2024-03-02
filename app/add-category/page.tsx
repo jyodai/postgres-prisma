@@ -2,8 +2,11 @@
 
 import AddCategory from '@/app/components/AddCategory';
 import {Category } from '@/types/types';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+    const [refreshKey, setRefreshKey] = useState(0);
+
     const handleSave = async (category: Category) => {
       await fetch(
           '/api/category',
@@ -16,11 +19,12 @@ export default function Home() {
           }
       )
       alert('登録完了');
+      setRefreshKey(oldKey => oldKey + 1);
     };
 
     return (
         <div className="container mx-auto p-4">
-          <AddCategory  initialCategory={null} onSave={handleSave} />
+          <AddCategory key={refreshKey} initialCategory={null} onSave={handleSave} />
         </div>
     );
 }
