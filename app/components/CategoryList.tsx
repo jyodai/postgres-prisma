@@ -6,10 +6,22 @@ import { Category } from '@/types/types';
 import { getCategory } from '@/services/sheetService';
 import { Constants } from '@/constants';
 import AddCategory from '@/app/components/AddCategory';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import ClearIcon from '@mui/icons-material/Clear';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import CategoryIcon from '@mui/icons-material/Category';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 interface Props {
   categories: Category[];
 }
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 const CategoryList = (props: Props) => {
     const [categories, setCategories] = useState<Category[]>(props.categories);
@@ -20,19 +32,23 @@ const CategoryList = (props: Props) => {
         setCategories(data);
     };
 
-    const onDelete = async (id: number) => {
-      await fetch(
-          `/api/category/${id}`,
-          {
-              method: 'DELETE',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-          }
-      )
+    const onDelete = async (e: React.MouseEvent<SVGSVGElement, MouseEvent>, id: number) => {
+        e.stopPropagation();
+        if (!confirm('削除しますか?')) {
+          return;
+        }
+        await fetch(
+            `/api/category/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
 
-      alert('削除完了');
-      fetchCategories();
+        alert('削除完了');
+        fetchCategories();
     };
 
     const onEdit = (entry: Category) => {
@@ -57,6 +73,7 @@ const CategoryList = (props: Props) => {
     };
 
     return (
+      <ThemeProvider theme={darkTheme}>
         <div className="container mx-auto p-4">
             {editingCategory ? (
                 <>
@@ -66,36 +83,38 @@ const CategoryList = (props: Props) => {
                     </button>
                 </>
             ) : (
-              <ul className="max-w-2xl mx-auto p-4 bg-white rounded-lg shadow">
-                  {categories.map((category, index) => (
-                      <li key={index} className="flex justify-between items-center p-4 border-b border-gray-200 last:border-0">
-                          <div className="flex-grow">
-                              <div className="text-gray-500 italic">{category.name}</div>
-                              {category.type === Constants.CATEGORY_TYPE_EXPENSE ? (
-                                <div className="text-gray-500 italic">支出</div>
-                              ) : (
-                                <div className="text-gray-500 italic">収入</div>
-                              )
-                              }
-                              <div className="text-gray-500 italic">
-                              <input
-                                  type="color"
-                                  name="color"
-                                  value={category.color}
-                                  disabled
-                              />
+              <div>
+                {categories.map((category, index) => (
+                  <div key={category.id}>
+                    <Card className="mb-4">
+                      <CardContent sx={{ cursor: 'pointer' }} onClick={() => onEdit(category)}>
+                        <div>
+                            <div className="flex items-center justify-between text-lg">
+                              <div className="flex items-center">
+                                  {category.type === Constants.CATEGORY_TYPE_EXPENSE ? (
+                                    <div>支出</div>
+                                  ) : (
+                                    <div>収入</div>
+                                  )
+                                  }
                               </div>
-                              <div className="text-gray-500 italic">{category.memo}</div>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                                <button onClick={() => onEdit(category)} className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">編集</button>
-                              <button onClick={() => onDelete(category.id)} className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">削除</button>
-                          </div>
-                      </li>
-                  ))}
-              </ul>
+                              <ClearIcon className="cursor-pointer" onClick={(e) => onDelete(e, category.id)}/>
+                            </div>
+                            <div className="flex items-center">
+                              <CategoryIcon sx={{ color: category.color }}/>{category.name}
+                            </div>
+                            <div className="flex items-center">
+                              <AssignmentIcon/>{category.memo}
+                            </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                ))}
+              </div>
             )}
         </div>
+      </ThemeProvider>
     );
 };
 

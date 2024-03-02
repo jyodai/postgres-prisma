@@ -12,6 +12,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import CreateIcon from '@mui/icons-material/Create';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Drawer from '@/components/Drawer';
 
 const darkTheme = createTheme({
   palette: {
@@ -43,13 +44,7 @@ const Header = () => {
               </IconButton>
             </Link>
 
-            <IconButton
-              size="large"
-              edge="start"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
+            <Drawer />
 
           </Toolbar>
         </AppBar>
