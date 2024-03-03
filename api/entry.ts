@@ -31,3 +31,19 @@ export const getEntry = async (): Promise<Entry[]> => {
     }) as Entry[];
     return entries;
 };
+
+export const getEntriesInRange = async (startDate: Date, endDate: Date): Promise<Entry[]> => {
+    const entries = await prisma.dev_entry.findMany({
+        where: {
+            date: {
+                gte: startDate,
+                lte: endDate,
+            },
+        },
+        include: {
+            category: true,
+        },
+    }) as Entry[];
+
+    return entries;
+};

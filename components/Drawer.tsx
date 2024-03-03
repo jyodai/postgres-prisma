@@ -26,6 +26,11 @@ export default function TemporaryDrawer() {
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         <ListItem>
+          <Link color="inherit" underline="none" href="/analysis">
+            <CategoryIcon />分析
+          </Link>
+        </ListItem>
+        <ListItem>
           <Link color="inherit" underline="none" href="/category">
             <CategoryIcon />カテゴリー
           </Link>

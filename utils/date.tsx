@@ -22,9 +22,28 @@ const getDayOfWeek = (date: Date): string => {
   return daysOfWeek[dayIndex];
 }
 
+const getWeekStartAndEndDates = (date: Date): { startDate: Date, endDate: Date } => {
+  const currentDate = new Date(date);
+
+  // ISO 8601に従い、月曜日を週の最初の日とするための調整
+  const dayOfWeek = currentDate.getDay() || 7; // 日曜日は0を返すため、7に置き換えて月曜日を1とする
+
+  const weekStartDate = new Date(currentDate);
+  weekStartDate.setDate(currentDate.getDate() - dayOfWeek + 1);
+
+  const weekEndDate = new Date(weekStartDate);
+  weekEndDate.setDate(weekStartDate.getDate() + 6);
+
+  return {
+    startDate: weekStartDate,
+    endDate: weekEndDate
+  };
+};
+
 export const dateUtils = {
     formatDateToDateTimeLocal,
     formatDate,
     getDayOfWeek,
+    getWeekStartAndEndDates,
 };
 
