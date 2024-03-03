@@ -57,7 +57,7 @@ const Analysis = (props: Props) => {
 
   const onBeforeWeek = () => {
     const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates(
-      props.startDate.setDate(props.startDate.getDate() - 7)
+      new Date(props.startDate.setDate(props.startDate.getDate() - 7))
     );
     const startDate = weekStartAndEndDates.startDate;
     const endDate = weekStartAndEndDates.endDate;
@@ -71,7 +71,7 @@ const Analysis = (props: Props) => {
 
   const onNextWeek = () => {
     const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates(
-      props.startDate.setDate(props.startDate.getDate() + 7)
+      new Date(props.startDate.setDate(props.startDate.getDate() + 7))
     );
     const startDate = weekStartAndEndDates.startDate;
     const endDate = weekStartAndEndDates.endDate;
