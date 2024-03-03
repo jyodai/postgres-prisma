@@ -24,8 +24,7 @@ const darkTheme = createTheme({
 });
 
 const Analysis = ({ entries }: Props) => {
-  const now = Date.now();
-  const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates(now);
+  const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates();
 
   const expenseEntries = entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_EXPENSE )
   const incomeEntries = entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_INCOME )
