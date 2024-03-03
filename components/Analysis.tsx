@@ -12,9 +12,12 @@ import Typography from '@mui/material/Typography';
 import CurrencyYenIcon from '@mui/icons-material/CurrencyYen';
 import { Constants } from '@/constants';
 import { dateUtils } from '@/utils/date';
+import { start } from 'repl';
 
 interface Props {
   entries: Entry[];
+  startDate: Date;
+  endDate: Date;
 }
 
 const darkTheme = createTheme({
@@ -23,11 +26,9 @@ const darkTheme = createTheme({
   },
 });
 
-const Analysis = ({ entries }: Props) => {
-  const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates();
-
-  const expenseEntries = entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_EXPENSE )
-  const incomeEntries = entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_INCOME )
+const Analysis = (props: Props) => {
+  const expenseEntries = props.entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_EXPENSE )
+  const incomeEntries = props.entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_INCOME )
 
   const sumsByExpenseCategory = expenseEntries.reduce((acc, entry) => {
     const categoryName = entry.category ? entry.category.name : 'Unknown';
@@ -56,9 +57,9 @@ const Analysis = ({ entries }: Props) => {
       <div className="p-4">
         <div className="flex justify-center mb-4">
           <Typography variant="subtitle1" component="strong" color="white">
-            {dateUtils.formatDate(weekStartAndEndDates.startDate)} 
+            {dateUtils.formatDate(props.startDate)} 
             {' ~ '} 
-            {dateUtils.formatDate(weekStartAndEndDates.endDate)}
+            {dateUtils.formatDate(props.endDate)}
           </Typography>
         </div>
 

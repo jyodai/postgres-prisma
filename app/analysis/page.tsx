@@ -31,7 +31,7 @@ export default async function Home(context: Context) {
     const entries = await getEntriesInRange(startDate, endDate);
 
     return (
-      <Analysis entries={entries} />
+      <Analysis entries={entries} startDate={startDate} endDate={endDate} />
     );
 }
 
