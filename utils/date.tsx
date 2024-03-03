@@ -8,12 +8,12 @@ const formatDateToDateTimeLocal = (date: Date): string => {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 
-const formatDate = (date: Date): string => {
+const formatDate = (date: Date, delimiter: string = '/'): string => {
   const d = new Date(date);
   const year = d.getFullYear();
   const month = ('0' + (d.getMonth() + 1)).slice(-2); // 月は0から始まるため+1する
   const day = ('0' + d.getDate()).slice(-2);
-  return `${year}/${month}/${day}`;
+  return `${year}${delimiter}${month}${delimiter}${day}`;
 }
 
 const getDayOfWeek = (date: Date): string => {

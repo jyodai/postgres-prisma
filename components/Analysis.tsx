@@ -10,9 +10,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import CurrencyYenIcon from '@mui/icons-material/CurrencyYen';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { Constants } from '@/constants';
 import { dateUtils } from '@/utils/date';
 import { start } from 'repl';
+import { useRouter } from 'next/navigation'
 
 interface Props {
   entries: Entry[];
@@ -52,15 +55,45 @@ const Analysis = (props: Props) => {
 
   const totalIncomeAmount = incomeEntries.reduce((sum, entry) => sum + entry.amount, 0);
 
+  const onBeforeWeek = () => {
+    const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates(
+      props.startDate.setDate(props.startDate.getDate() - 7)
+    );
+    const startDate = weekStartAndEndDates.startDate;
+    const endDate = weekStartAndEndDates.endDate;
+    const params = {
+      startDate : dateUtils.formatDate(startDate, '-'),
+      endDate : dateUtils.formatDate(endDate, '-')
+    }
+    const urlSearchParam =  new URLSearchParams(params).toString();
+    window.location.href = `/analysis/?${urlSearchParam}`;
+  }
+
+  const onNextWeek = () => {
+    const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates(
+      props.startDate.setDate(props.startDate.getDate() + 7)
+    );
+    const startDate = weekStartAndEndDates.startDate;
+    const endDate = weekStartAndEndDates.endDate;
+    const params = {
+      startDate : dateUtils.formatDate(startDate, '-'),
+      endDate : dateUtils.formatDate(endDate, '-')
+    }
+    const urlSearchParam =  new URLSearchParams(params).toString();
+    window.location.href = `/analysis/?${urlSearchParam}`;
+  }
+
   return (
     <ThemeProvider theme={darkTheme}>
       <div className="p-4">
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-4 items-center">
+          <NavigateBeforeIcon  onClick={() => onBeforeWeek()} />
           <Typography variant="subtitle1" component="strong" color="white">
             {dateUtils.formatDate(props.startDate)} 
             {' ~ '} 
             {dateUtils.formatDate(props.endDate)}
           </Typography>
+          <NavigateNextIcon onClick={() => onNextWeek()}/>
         </div>
 
         <Container className="mb-4">
