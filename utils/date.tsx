@@ -23,7 +23,7 @@ const getDayOfWeek = (date: Date): string => {
 }
 
 const getWeekStartAndEndDates = (date: Date = new Date()): { startDate: Date, endDate: Date } => {
-  const currentDate = new Date(date);
+  const currentDate = new Date(date.setHours(0, 0, 0, 0));
 
   // ISO 8601に従い、月曜日を週の最初の日とするための調整
   const dayOfWeek = currentDate.getDay() || 7; // 日曜日は0を返すため、7に置き換えて月曜日を1とする
