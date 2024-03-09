@@ -59,30 +59,28 @@ const adjustDateByDays = (date: Date, days: number): Date => {
   return adjustedDate;
 };
 
+const getMonthStartDate = (date: Date = new Date()): Date => {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
+};
+
+const getMonthEndDate = (date: Date = new Date()): Date => {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+};
+
 const getNextMonthStartDate = (date: Date = new Date()): Date => {
-  const nextMonthDate = adjustDateByMonths(date, 1);
-  return new Date(nextMonthDate.getFullYear(), nextMonthDate.getMonth(), 1);
+  return new Date(date.getFullYear(), date.getMonth() + 1, 1);
 };
 
 const getNextMonthEndDate = (date: Date = new Date()): Date => {
-  const nextMonthDate = adjustDateByMonths(date, 1);
-  return new Date(nextMonthDate.getFullYear(), nextMonthDate.getMonth() + 1, 0);
+  return new Date(date.getFullYear(), date.getMonth() + 2, 0);
 };
 
 const getPrevMonthStartDate = (date: Date = new Date()): Date => {
-  const prevMonthDate = adjustDateByMonths(date, -1);
-  return new Date(prevMonthDate.getFullYear(), prevMonthDate.getMonth(), 1);
+  return new Date(date.getFullYear(), date.getMonth() - 1, 1);
 };
 
 const getPrevMonthEndDate = (date: Date = new Date()): Date => {
-  const prevMonthDate = adjustDateByMonths(date, -1);
-  return new Date(prevMonthDate.getFullYear(), prevMonthDate.getMonth() + 1, 0);
-};
-
-const adjustDateByMonths = (date: Date, months: number): Date => {
-  const adjustedDate = new Date(date);
-  adjustedDate.setMonth(adjustedDate.getMonth() + months);
-  return adjustedDate;
+  return new Date(date.getFullYear(), date.getMonth(), 0);
 };
 
 export const dateUtils = {
@@ -95,6 +93,8 @@ export const dateUtils = {
     getNextWeekEndDate,
     getPrevWeekStartDate,
     getPrevWeekEndDate,
+    getMonthStartDate,
+    getMonthEndDate,
     getNextMonthStartDate,
     getNextMonthEndDate,
     getPrevMonthStartDate,
