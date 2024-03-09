@@ -34,28 +34,6 @@ const Analysis = (props: Props) => {
   const expenseEntries = props.entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_EXPENSE )
   const incomeEntries = props.entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_INCOME )
 
-  const sumsByExpenseCategory = expenseEntries.reduce((acc, entry) => {
-    const categoryName = entry.category ? entry.category.name : 'Unknown';
-    if (!acc[categoryName]) {
-      acc[categoryName] = 0;
-    }
-    acc[categoryName] += entry.amount;
-    return acc;
-  }, {} as { [key: string]: number });
-
-  const totalExpenseAmount = expenseEntries.reduce((sum, entry) => sum + entry.amount, 0);
-
-  const sumsByIncomeCategory = incomeEntries.reduce((acc, entry) => {
-    const categoryName = entry.category ? entry.category.name : 'Unknown';
-    if (!acc[categoryName]) {
-      acc[categoryName] = 0;
-    }
-    acc[categoryName] += entry.amount;
-    return acc;
-  }, {} as { [key: string]: number });
-
-  const totalIncomeAmount = incomeEntries.reduce((sum, entry) => sum + entry.amount, 0);
-
   const onBeforeWeek = () => {
     const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates(
       new Date(props.startDate.setDate(props.startDate.getDate() - 7))
