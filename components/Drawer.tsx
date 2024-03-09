@@ -31,6 +31,11 @@ export default function TemporaryDrawer() {
           </Link>
         </ListItem>
         <ListItem>
+          <Link color="inherit" underline="none" href="/analysis/month">
+            <CategoryIcon />月次分析
+          </Link>
+        </ListItem>
+        <ListItem>
           <Link color="inherit" underline="none" href="/category">
             <CategoryIcon />カテゴリー
           </Link>
