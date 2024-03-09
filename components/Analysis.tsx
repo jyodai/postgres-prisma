@@ -17,6 +17,7 @@ import { dateUtils } from '@/utils/date';
 import { start } from 'repl';
 import { useRouter } from 'next/navigation'
 import CategorySummary from '@/components/CategorySummary';
+import DateNavigator from '@/components/DateNavigator';
 
 interface Props {
   entries: Entry[];
@@ -63,16 +64,12 @@ const Analysis = (props: Props) => {
   return (
     <ThemeProvider theme={darkTheme}>
       <div className="p-4">
-        <div className="flex justify-center mb-4 items-center">
-          <NavigateBeforeIcon  onClick={() => onBeforeWeek()} />
-          <Typography variant="subtitle1" component="strong" color="white">
-            {dateUtils.formatDate(props.startDate)} 
-            {' ~ '} 
-            {dateUtils.formatDate(props.endDate)}
-          </Typography>
-          <NavigateNextIcon onClick={() => onNextWeek()}/>
-        </div>
-
+        <DateNavigator
+          startDate={props.startDate}
+          endDate={props.endDate}
+          onPrev={onBeforeWeek}
+          onNext={onNextWeek}
+        />
 
       <Container className="mb-4">
         <CategorySummary title="支出" entries={expenseEntries} />
