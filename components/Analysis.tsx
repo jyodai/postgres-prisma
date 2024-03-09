@@ -35,7 +35,7 @@ const Analysis = (props: Props) => {
   const expenseEntries = props.entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_EXPENSE )
   const incomeEntries = props.entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_INCOME )
 
-  const onBeforeWeek = () => {
+  const onPrev = () => {
     const startDate = dateUtils.getPrevWeekStartDate(props.startDate);
     const endDate = dateUtils.getPrevWeekEndDate(props.endDate);
 
@@ -48,7 +48,7 @@ const Analysis = (props: Props) => {
     window.location.href = `/analysis/?${urlSearchParam}`;
   }
 
-  const onNextWeek = () => {
+  const onNext = () => {
     const startDate = dateUtils.getNextWeekStartDate(props.startDate);
     const endDate = dateUtils.getNextWeekEndDate(props.endDate);
 
@@ -67,8 +67,8 @@ const Analysis = (props: Props) => {
         <DateNavigator
           startDate={props.startDate}
           endDate={props.endDate}
-          onPrev={onBeforeWeek}
-          onNext={onNextWeek}
+          onPrev={onPrev}
+          onNext={onNext}
         />
 
       <Container className="mb-4">
