@@ -1,4 +1,4 @@
-import Analysis from '@/components/Analysis';
+import MonthAnalysis from '@/components/MonthAnalysis';
 import { getEntriesInRange } from '@/api/entry'
 import {dateUtils } from '@/utils/date'
 
@@ -23,15 +23,14 @@ export default async function Home(context: Context) {
         startDate = new Date(queryStartDate);
         endDate = new Date(queryEndDate);
     } else {
-        const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates();
-        startDate = weekStartAndEndDates.startDate;
-        endDate = weekStartAndEndDates.endDate;
+        startDate = dateUtils.getMonthStartDate();
+        endDate = dateUtils.getMonthEndDate();
     }
 
     const entries = await getEntriesInRange(startDate, endDate);
 
     return (
-      <Analysis entries={entries} startDate={startDate} endDate={endDate} />
+      <MonthAnalysis entries={entries} startDate={startDate} endDate={endDate} />
     );
 }
 

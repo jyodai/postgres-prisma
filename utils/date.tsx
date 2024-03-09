@@ -22,28 +22,82 @@ const getDayOfWeek = (date: Date): string => {
   return daysOfWeek[dayIndex];
 }
 
-const getWeekStartAndEndDates = (date: Date = new Date()): { startDate: Date, endDate: Date } => {
+const getWeekStartDate = (date: Date = new Date()): Date => {
   const currentDate = new Date(date.setHours(0, 0, 0, 0));
-
   // ISO 8601に従い、月曜日を週の最初の日とするための調整
-  const dayOfWeek = currentDate.getDay() || 7; // 日曜日は0を返すため、7に置き換えて月曜日を1とする
+  const dayOfWeek = currentDate.getDay() === 0 ? 7 : currentDate.getDay(); // 日曜日は0を返すため、7に置き換えて月曜日を1とする
+  currentDate.setDate(currentDate.getDate() - dayOfWeek + 1);
+  return currentDate;
+};
 
-  const weekStartDate = new Date(currentDate);
-  weekStartDate.setDate(currentDate.getDate() - dayOfWeek + 1);
+const getWeekEndDate = (date: Date = new Date()): Date => {
+  const startDate = getWeekStartDate(date);
+  const weekEndDate = new Date(startDate);
+  weekEndDate.setDate(startDate.getDate() + 6);
+  return weekEndDate;
+};
 
-  const weekEndDate = new Date(weekStartDate);
-  weekEndDate.setDate(weekStartDate.getDate() + 6);
+const getNextWeekStartDate = (date: Date = new Date()): Date => {
+  return adjustDateByDays(getWeekStartDate(date), 7);
+};
 
-  return {
-    startDate: weekStartDate,
-    endDate: weekEndDate
-  };
+const getNextWeekEndDate = (date: Date = new Date()): Date => {
+  return adjustDateByDays(getWeekEndDate(date), 7);
+};
+
+const getPrevWeekStartDate = (date: Date = new Date()): Date => {
+  return adjustDateByDays(getWeekStartDate(date), -7);
+};
+
+const getPrevWeekEndDate = (date: Date = new Date()): Date => {
+  return adjustDateByDays(getWeekEndDate(date), -7);
+};
+
+const adjustDateByDays = (date: Date, days: number): Date => {
+  const adjustedDate = new Date(date);
+  adjustedDate.setDate(adjustedDate.getDate() + days);
+  return adjustedDate;
+};
+
+const getMonthStartDate = (date: Date = new Date()): Date => {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
+};
+
+const getMonthEndDate = (date: Date = new Date()): Date => {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+};
+
+const getNextMonthStartDate = (date: Date = new Date()): Date => {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 1);
+};
+
+const getNextMonthEndDate = (date: Date = new Date()): Date => {
+  return new Date(date.getFullYear(), date.getMonth() + 2, 0);
+};
+
+const getPrevMonthStartDate = (date: Date = new Date()): Date => {
+  return new Date(date.getFullYear(), date.getMonth() - 1, 1);
+};
+
+const getPrevMonthEndDate = (date: Date = new Date()): Date => {
+  return new Date(date.getFullYear(), date.getMonth(), 0);
 };
 
 export const dateUtils = {
     formatDateToDateTimeLocal,
     formatDate,
     getDayOfWeek,
-    getWeekStartAndEndDates,
+    getWeekStartDate,
+    getWeekEndDate,
+    getNextWeekStartDate,
+    getNextWeekEndDate,
+    getPrevWeekStartDate,
+    getPrevWeekEndDate,
+    getMonthStartDate,
+    getMonthEndDate,
+    getNextMonthStartDate,
+    getNextMonthEndDate,
+    getPrevMonthStartDate,
+    getPrevMonthEndDate,
 };
 
