@@ -16,6 +16,7 @@ import { Constants } from '@/constants';
 import { dateUtils } from '@/utils/date';
 import { start } from 'repl';
 import { useRouter } from 'next/navigation'
+import CategorySummary from '@/components/CategorySummary';
 
 interface Props {
   entries: Entry[];
@@ -96,35 +97,15 @@ const Analysis = (props: Props) => {
           <NavigateNextIcon onClick={() => onNextWeek()}/>
         </div>
 
-        <Container className="mb-4">
-          <Paper elevation={3}>
-            <List>
-              <ListItem>
-                <div className="flex items-center">支出 : <CurrencyYenIcon/>{totalExpenseAmount}</div>
-              </ListItem>
-              {Object.entries(sumsByExpenseCategory).map(([category, sum]) => (
-                <ListItem key={category}>
-                  <div className="flex items-center">{category} : <CurrencyYenIcon/>{sum}</div>
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
-        </Container>
 
-        <Container>
-          <Paper elevation={3}>
-            <List>
-              <ListItem>
-                <div className="flex items-center">収入 : <CurrencyYenIcon/>{totalIncomeAmount}</div>
-              </ListItem>
-              {Object.entries(sumsByIncomeCategory).map(([category, sum]) => (
-                <ListItem key={category}>
-                  <div className="flex items-center">{category} : <CurrencyYenIcon/>{sum}</div>
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
-        </Container>
+      <Container className="mb-4">
+        <CategorySummary title="支出" entries={expenseEntries} />
+      </Container>
+
+      <Container>
+        <CategorySummary title="収入" entries={incomeEntries} />
+      </Container>
+
       </div>
     </ThemeProvider>
   );
