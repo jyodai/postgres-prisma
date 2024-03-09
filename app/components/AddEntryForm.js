@@ -40,7 +40,7 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
         if (initialEntry) {
             setEntry({
                 id: initialEntry.id,
-                date: initialEntry.date,
+                date: dateUtils.formatDateToDateTimeLocal(initialEntry.date),
                 category_id: initialEntry.category_id,
                 amount: initialEntry.amount,
                 store: initialEntry.store,
@@ -109,7 +109,7 @@ const AddEntryForm = ({ initialEntry, categories, onSave }) => {
               id="date"
               label="日付"
               type="datetime-local"
-              value={entry.date instanceof Date ? entry.date.toISOString().slice(0,16) : new Date().toISOString().slice(0,16)}
+              value={ entry.date }
               onChange={(e) => setEntry({ ...entry, date: new Date(e.target.value) })}
               required
               fullWidth
