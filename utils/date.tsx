@@ -40,10 +40,55 @@ const getWeekStartAndEndDates = (date: Date = new Date()): { startDate: Date, en
   };
 };
 
+const getWeekStartDate = (date: Date = new Date()): Date => {
+  const currentDate = new Date(date.setHours(0, 0, 0, 0));
+  // ISO 8601に従い、月曜日を週の最初の日とするための調整
+  const dayOfWeek = currentDate.getDay() === 0 ? 7 : currentDate.getDay(); // 日曜日は0を返すため、7に置き換えて月曜日を1とする
+  currentDate.setDate(currentDate.getDate() - dayOfWeek + 1);
+  return currentDate;
+};
+
+const getWeekEndDate = (date: Date = new Date()): Date => {
+  const startDate = getWeekStartDate(date);
+  const weekEndDate = new Date(startDate);
+  weekEndDate.setDate(startDate.getDate() + 6);
+  return weekEndDate;
+};
+
+const getNextWeekStartDate = (date: Date = new Date()): Date => {
+  return adjustDateByDays(getWeekStartDate(date), 7);
+};
+
+const getNextWeekEndDate = (date: Date = new Date()): Date => {
+  return adjustDateByDays(getWeekEndDate(date), 7);
+};
+
+const getPrevWeekStartDate = (date: Date = new Date()): Date => {
+  return adjustDateByDays(getWeekStartDate(date), -7);
+};
+
+const getPrevWeekEndDate = (date: Date = new Date()): Date => {
+  return adjustDateByDays(getWeekEndDate(date), -7);
+};
+
+const adjustDateByDays = (date: Date, days: number): Date => {
+  const adjustedDate = new Date(date);
+  adjustedDate.setDate(adjustedDate.getDate() + days);
+  return adjustedDate;
+};
+
+
+
 export const dateUtils = {
     formatDateToDateTimeLocal,
     formatDate,
     getDayOfWeek,
     getWeekStartAndEndDates,
+    getWeekStartDate,
+    getWeekEndDate,
+    getNextWeekStartDate,
+    getNextWeekEndDate,
+    getPrevWeekStartDate,
+    getPrevWeekEndDate,
 };
 

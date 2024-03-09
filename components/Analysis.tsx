@@ -35,11 +35,9 @@ const Analysis = (props: Props) => {
   const incomeEntries = props.entries.filter((entry) => entry.category.type === Constants.CATEGORY_TYPE_INCOME )
 
   const onBeforeWeek = () => {
-    const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates(
-      new Date(props.startDate.setDate(props.startDate.getDate() - 7))
-    );
-    const startDate = weekStartAndEndDates.startDate;
-    const endDate = weekStartAndEndDates.endDate;
+    const startDate = dateUtils.getPrevWeekStartDate(props.startDate);
+    const endDate = dateUtils.getPrevWeekEndDate(props.endDate);
+
     const params = {
       startDate : dateUtils.formatDate(startDate, '-'),
       endDate : dateUtils.formatDate(endDate, '-')
@@ -49,11 +47,9 @@ const Analysis = (props: Props) => {
   }
 
   const onNextWeek = () => {
-    const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates(
-      new Date(props.startDate.setDate(props.startDate.getDate() + 7))
-    );
-    const startDate = weekStartAndEndDates.startDate;
-    const endDate = weekStartAndEndDates.endDate;
+    const startDate = dateUtils.getNextWeekStartDate(props.startDate);
+    const endDate = dateUtils.getNextWeekEndDate(props.endDate);
+
     const params = {
       startDate : dateUtils.formatDate(startDate, '-'),
       endDate : dateUtils.formatDate(endDate, '-')
