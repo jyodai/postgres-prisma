@@ -45,7 +45,7 @@ const Analysis = (props: Props) => {
     }
     const urlSearchParam =  new URLSearchParams(params).toString();
 
-    window.location.href = `/analysis/?${urlSearchParam}`;
+    window.location.href = `/analysis/week/?${urlSearchParam}`;
   }
 
   const onNext = () => {
@@ -58,7 +58,7 @@ const Analysis = (props: Props) => {
     }
     const urlSearchParam =  new URLSearchParams(params).toString();
 
-    window.location.href = `/analysis/?${urlSearchParam}`;
+    window.location.href = `/analysis/week/?${urlSearchParam}`;
   }
 
   return (

@@ -1,4 +1,4 @@
-import Analysis from '@/components/Analysis';
+import WeekAnalysis from '@/components/WeekAnalysis';
 import { getEntriesInRange } from '@/api/entry'
 import {dateUtils } from '@/utils/date'
 
@@ -30,7 +30,7 @@ export default async function Home(context: Context) {
     const entries = await getEntriesInRange(startDate, endDate);
 
     return (
-      <Analysis entries={entries} startDate={startDate} endDate={endDate} />
+      <WeekAnalysis entries={entries} startDate={startDate} endDate={endDate} />
     );
 }
 
