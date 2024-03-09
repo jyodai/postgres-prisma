@@ -43,6 +43,7 @@ const Analysis = (props: Props) => {
       endDate : dateUtils.formatDate(endDate, '-')
     }
     const urlSearchParam =  new URLSearchParams(params).toString();
+
     window.location.href = `/analysis/?${urlSearchParam}`;
   }
 
@@ -55,6 +56,7 @@ const Analysis = (props: Props) => {
       endDate : dateUtils.formatDate(endDate, '-')
     }
     const urlSearchParam =  new URLSearchParams(params).toString();
+
     window.location.href = `/analysis/?${urlSearchParam}`;
   }
 

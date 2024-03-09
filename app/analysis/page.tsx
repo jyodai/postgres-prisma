@@ -23,9 +23,8 @@ export default async function Home(context: Context) {
         startDate = new Date(queryStartDate);
         endDate = new Date(queryEndDate);
     } else {
-        const weekStartAndEndDates = dateUtils.getWeekStartAndEndDates();
-        startDate = weekStartAndEndDates.startDate;
-        endDate = weekStartAndEndDates.endDate;
+        startDate = dateUtils.getWeekStartDate();
+        endDate = dateUtils.getWeekEndDate();
     }
 
     const entries = await getEntriesInRange(startDate, endDate);
