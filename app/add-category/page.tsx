@@ -1,6 +1,6 @@
 "use client";
 
-import AddCategory from '@/app/components/AddCategory';
+import AddCategory from '@/components/AddCategory';
 import {Category } from '@/types/types';
 import { useState, useEffect } from 'react';
 

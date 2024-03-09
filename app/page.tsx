@@ -1,4 +1,4 @@
-import EntryList from '@/app/components/EntryList';
+import EntryList from '@/components/EntryList';
 import { getCategory } from '@/api/category'
 import { getEntry } from '@/api/entry'
 

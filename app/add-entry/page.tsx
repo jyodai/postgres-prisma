@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import AddEntryForm from '@/app/components/AddEntryForm';
+import AddEntryForm from '@/components/AddEntryForm';
 import { addEntryToSheet, getCategory } from '@/services/sheetService';
 import { Entry, Category } from '@/types/types';
 

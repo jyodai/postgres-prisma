@@ -5,7 +5,7 @@ import { dateUtils } from '@/utils/date';
 import { Category } from '@/types/types';
 import { getCategory } from '@/services/sheetService';
 import { Constants } from '@/constants';
-import AddCategory from '@/app/components/AddCategory';
+import AddCategory from '@/components/AddCategory';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import ClearIcon from '@mui/icons-material/Clear';

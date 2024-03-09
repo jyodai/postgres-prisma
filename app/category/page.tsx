@@ -1,4 +1,4 @@
-import CategoryList from '@/app/components/CategoryList';
+import CategoryList from '@/components/CategoryList';
 import { getCategory } from '@/api/category';
 import {Category } from '@/types/types';
 
